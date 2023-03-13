@@ -26,7 +26,7 @@ if __name__ == '__main__':
     totalCnt = resDict['result_data']['poi_section']['total_cnt']
     restaurants = {}
     duplicatedRestaurants = {}
-    for ptr in range(0, int(totalCnt/20)):
+    for ptr in range(0, min(int(100/20), int(totalCnt/20))):
         print(ptr)
         offset = ptr*20
         time.sleep(0.5)

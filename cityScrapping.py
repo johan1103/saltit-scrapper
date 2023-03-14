@@ -27,16 +27,33 @@ def scrapping_city():
             for grand_child_name in child_name['child']:
                 # 강남역, 압구정....
                 city_name = first_city_name + ' ' + second_city_name + ' ' + grand_child_name
-                cities.append(city_name)
+                cities[first_city_name].append(city_name)
     return cities
+
+
+def print_in_console(result_cities):
+    print(result_cities)
+    for key, name in result_cities.items():
+        for detail_name in name:
+            print(detail_name)
+
+
+def print_in_text(result_cities):
+    print(result_cities)
+    f = open("static/cities.txt", 'w')
+    for key, name in result_cities.items():
+        print(key)
+        f.write('city name : ')
+        f.write(key)
+        f.write('\n')
+        for detail_name in name:
+            f.write('    name : ')
+            f.write(detail_name)
+            f.write('\n')
+            print(detail_name)
+    f.close()
 
 
 if __name__ == '__main__':
     result_cities = scrapping_city()
-    f = open("static/cities.txt", 'w')
-    for name in result_cities:
-        f.write('city name : ')
-        f.write(name)
-        f.write('\n')
-        print(name)
-    f.close()
+    print_in_text(result_cities)

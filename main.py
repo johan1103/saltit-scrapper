@@ -9,8 +9,6 @@ if __name__ == '__main__':
     for city_name, city_detail in result_cities.items():
         restaurants = {}
         duplicated_restaurants = {}
-        if city_name != "서울":
-            break
         for detail_name in city_detail:
             for food_type in food_types:
                 scrapping_restaurants(restaurants, duplicated_restaurants, detail_name, food_type)

@@ -20,10 +20,8 @@ def scrapping_city():
         # 서울
         first_city_name = city['name']
         cities[first_city_name] = []
-        print(city)
         for child_name in city['child']:
             # 강남구
-            print(first_city_name)
             second_city_name = child_name['name']
             for grand_child_name in child_name['child']:
                 # 강남역, 압구정....
@@ -40,10 +38,8 @@ def print_in_console(result_cities):
 
 
 def print_in_text(result_cities):
-    print(result_cities)
     f = open("static/cities.txt", 'w')
     for key, name in result_cities.items():
-        print(key)
         f.write('city name : ')
         f.write(key)
         f.write('\n')
@@ -51,10 +47,8 @@ def print_in_text(result_cities):
             f.write('    name : ')
             f.write(detail_name)
             f.write('\n')
-            print(detail_name)
     f.close()
 
 
 if __name__ == '__main__':
     result_cities = scrapping_city()
-    print_in_text(result_cities)

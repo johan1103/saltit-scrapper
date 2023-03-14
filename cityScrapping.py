@@ -3,7 +3,7 @@ import requests
 
 
 def scrapping_city():
-    cities = []
+    cities = {}
     data = {'mode': 'district'}
     url = 'https://im.diningcode.com/API/isearch/'
     chrome_header = {
@@ -19,6 +19,7 @@ def scrapping_city():
     for city in city_dict:
         # 서울
         first_city_name = city['name']
+        cities[first_city_name] = []
         print(city)
         for child_name in city['child']:
             # 강남구

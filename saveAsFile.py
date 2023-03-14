@@ -2,17 +2,16 @@ import pandas as pd
 
 
 def save_as_csv(restaurants, duplicated_restaurants, city_name):
-    df = pd.DataFrame(columns=['address', 'rid', 'name', 'category', 'lat', 'lng', 'phone', 'img', 'score'])
+    dict_for_pd = []
     for restaurant_summary in restaurants.values():
-        restaurant_df = pd.DataFrame(data=[restaurant_summary['address'], restaurant_summary['rid'],
-                                           restaurant_summary['name'], restaurant_summary['category'],
-                                           restaurant_summary['latitude'], restaurant_summary['longitude'],
-                                           restaurant_summary['phone'], restaurant_summary['imgSrc'],
-                                           restaurant_summary['score']], columns=['address', 'rid', 'name', 'category',
-                                                                                  'lat', 'lng', 'phone', 'img', 'score'],
-                                     )
-        df.append(restaurant_df)
-    df.to_csv(path_or_buf="static/restaurant-summary" + city_name)
+        dict_for_pd.append({'address': restaurant_summary['address'], 'rid': restaurant_summary['rid'],
+                            'name': restaurant_summary['name'], 'category': restaurant_summary['category'],
+                            'score': restaurant_summary['score'], 'lat': restaurant_summary['latitude'],
+                            'lng': restaurant_summary['longitude'], 'phone': restaurant_summary['phone'],
+                            'img': restaurant_summary['imgSrc']})
+    df = pd.DataFrame(data= dict_for_pd,
+                      columns=['address', 'rid', 'name', 'category', 'score', 'lat', 'lng', 'phone', 'img'])
+    df.to_csv(path_or_buf="static/restaurant-summary-" + city_name + ".csv")
     return
 
 def save_as_text(restaurants, duplicated_restaurants):

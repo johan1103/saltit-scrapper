@@ -31,3 +31,4 @@ if __name__ == '__main__':
         # 테스트 용도로 서울의 식당 데이터 20개만 추출
         if name == '서울':
             restaurants = get_restaurants_by_dict(city_name=name)
+            print(restaurants)

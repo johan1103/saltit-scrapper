@@ -18,7 +18,7 @@ def save_as_csv(restaurants, duplicated_restaurants, city_name):
 
 
 def save_as_text(restaurants, duplicated_restaurants, city_name):
-    f = open("static/scrap-" + city_name + ".txt", 'w')
+    f = open("../static/scrap-" + city_name + ".txt", 'w')
     for rid in restaurants:
         f.write('id : ')
         f.write(restaurants[rid]['rid'])
@@ -33,7 +33,7 @@ def save_as_text(restaurants, duplicated_restaurants, city_name):
         f.write('}')
         f.write('\n')
     f.close()
-    f = open("static/duplicated.txt", 'w')
+    f = open("../static/duplicated.txt", 'w')
     for rid in duplicated_restaurants:
         print(rid)
         f.write('id ')

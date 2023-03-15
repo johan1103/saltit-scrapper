@@ -38,7 +38,7 @@ def print_in_console(result_cities):
 
 
 def print_in_text(result_cities):
-    f = open("static/cities.txt", 'w')
+    f = open("../static/cities.txt", 'w')
     for key, name in result_cities.items():
         f.write('city name : ')
         f.write(key)

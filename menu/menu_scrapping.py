@@ -1,4 +1,6 @@
 import requests
+import time
+from random import random
 from bs4 import BeautifulSoup
 
 
@@ -9,7 +11,9 @@ def find_menu_block(soup):
         return None
     return menu_block
 
+
 def scrapping_menus(restaurants):
+    time.sleep(random()/5)
     base_url = 'https://www.diningcode.com/profile.php?rid='
     chrome_header = {
         'Accept': 'text/html, */*',
@@ -17,6 +21,7 @@ def scrapping_menus(restaurants):
     }
     restaurant_menus = []
     for rid, restaurant in restaurants.items():
+        print(restaurant['address'] + ',' + restaurant['name'])
         url = base_url + rid
         page = requests.get(url=url, headers=chrome_header)
         soup = BeautifulSoup(page.text, "html.parser")
@@ -31,6 +36,5 @@ def scrapping_menus(restaurants):
             price = li_block.find(class_='Restaurant_MenuPrice')
             restaurant_menus.append({'address': restaurant['address'], 'rid': rid, 'name': name.text,
                                      'price': price.text, 'order_number': order_number})
-    print(restaurant_menus)
     return restaurant_menus
 

@@ -13,12 +13,12 @@ def save_as_csv(restaurants, duplicated_restaurants, city_name):
     df = pd.DataFrame(data=dict_for_pd,
                       columns=['address', 'rid', 'name', 'food_type', 'category', 'score', 'lat', 'lng', 'phone', 'img']
                       )
-    df.to_csv(path_or_buf="static/restaurant-summary-" + city_name + ".csv")
+    df.to_csv(path_or_buf="../static/summary/restaurant-summary-" + city_name + ".csv")
     return
 
 
 def save_as_text(restaurants, duplicated_restaurants, city_name):
-    f = open("../static/scrap-" + city_name + ".txt", 'w')
+    f = open("../static/summary/scrap-" + city_name + ".txt", 'w')
     for rid in restaurants:
         f.write('id : ')
         f.write(restaurants[rid]['rid'])
@@ -33,7 +33,7 @@ def save_as_text(restaurants, duplicated_restaurants, city_name):
         f.write('}')
         f.write('\n')
     f.close()
-    f = open("../static/duplicated.txt", 'w')
+    f = open("../static/summary/duplicated.txt", 'w')
     for rid in duplicated_restaurants:
         print(rid)
         f.write('id ')

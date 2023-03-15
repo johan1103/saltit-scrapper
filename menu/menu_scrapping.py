@@ -31,7 +31,6 @@ def scrapping_menus(restaurants):
             price = li_block.find(class_='Restaurant_MenuPrice')
             restaurant_menus.append({'address': restaurant['address'], 'rid': rid, 'name': name.text,
                                      'price': price.text, 'order_number': order_number})
-
-        print(restaurant_menus)
-        break
+    print(restaurant_menus)
+    return restaurant_menus
 

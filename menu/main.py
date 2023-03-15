@@ -1,19 +1,15 @@
 import pandas as pd
 from menu.menu_scrapping import scrapping_menus
-from menu.save_file import save_as_text
+from menu.save_file import save_as_excel
+
 
 def get_restaurants_by_dict(city_name):
     data = pd.read_csv('../static/summary/restaurant-summary-' + city_name + '.csv')
     raw_dict = data.to_dict('index')
     convert_dict = {}
-    cnt = 0
     for idx, raw_value in raw_dict.items():
-        cnt += 1
         convert_dict[raw_value['rid']] = {'rid': raw_value['rid'], 'name': raw_value['name'],
                                           'address': raw_value['address']}
-        # 기능 테스트 용도로 식당 데이터 20개만 추출
-        if cnt > 20:
-            break
     return convert_dict
 
 
@@ -25,4 +21,4 @@ if __name__ == '__main__':
         if name == '서울':
             restaurants = get_restaurants_by_dict(city_name=name)
             menus = scrapping_menus(restaurants)
-            save_as_text(menus, name)
+            save_as_excel(menus, name)

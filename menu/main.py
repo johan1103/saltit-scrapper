@@ -1,6 +1,6 @@
 import pandas as pd
-from menu.menu_scrapping import scrapping_menus
-from menu.save_file import save_as_excel
+from menu_scrapping import scrapping_menus
+from save_file import save_as_excel
 
 
 def get_restaurants_by_dict(city_name):

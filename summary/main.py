@@ -1,4 +1,4 @@
-from summary.city_scrapping import scrapping_city
+from city_scrapping import scrapping_city
 from restaurant_scrapping import scrapping_restaurants
 from save_file import save_as_text
 from save_file import save_as_csv

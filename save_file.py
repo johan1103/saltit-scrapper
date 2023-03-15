@@ -11,7 +11,8 @@ def save_as_csv(restaurants, duplicated_restaurants, city_name):
                             'lng': restaurant_summary['longitude'], 'phone': restaurant_summary['phone'],
                             'img': restaurant_summary['imgSrc']})
     df = pd.DataFrame(data=dict_for_pd,
-                      columns=['address', 'rid', 'name', 'food_type', 'category', 'score', 'lat', 'lng', 'phone', 'img'])
+                      columns=['address', 'rid', 'name', 'food_type', 'category', 'score', 'lat', 'lng', 'phone', 'img']
+                      )
     df.to_csv(path_or_buf="static/restaurant-summary-" + city_name + ".csv")
     return
 

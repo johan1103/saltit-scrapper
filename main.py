@@ -1,7 +1,7 @@
-from cityScrapping import scrapping_city
-from restaurantScrapping import scrapping_restaurants
-from saveAsFile import save_as_text
-from saveAsFile import save_as_csv
+from city_scrapping import scrapping_city
+from restaurant_scrapping import scrapping_restaurants
+from save_file import save_as_text
+from save_file import save_as_csv
 
 if __name__ == '__main__':
     result_cities = scrapping_city()

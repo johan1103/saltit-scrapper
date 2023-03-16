@@ -1,4 +1,5 @@
 import requests
+import re
 import time
 from random import random
 from bs4 import BeautifulSoup
@@ -10,6 +11,15 @@ def find_menu_block(soup):
     except AttributeError as e:
         return None
     return menu_block
+
+
+def change_price_to_int(price_str):
+    only_number_str = re.sub(r'[^0-9]', '', price_str)
+    can_convert_to_int = re.match(r'[0-9]', only_number_str)
+    if can_convert_to_int is None:
+        return ''
+    price_int = int(only_number_str)
+    return price_int
 
 
 def scrapping_menus(restaurants):
@@ -33,8 +43,9 @@ def scrapping_menus(restaurants):
         for li_block in li_blocks:
             order_number += 1
             name = li_block.find(class_='Restaurant_Menu')
-            price = li_block.find(class_='Restaurant_MenuPrice')
+            price_block = li_block.find(class_='Restaurant_MenuPrice')
+            price_int = change_price_to_int(price_block.text)
             restaurant_menus.append({'address': restaurant['address'], 'rid': rid, 'name': name.text,
-                                     'price': price.text, 'order_number': order_number})
+                                     'price': price_int, 'order_number': order_number})
     return restaurant_menus
 

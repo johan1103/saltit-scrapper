@@ -35,13 +35,16 @@ def get_food_type_id_by_dict(curs):
 def insert_db(curs, list):
     datas = []
     now = datetime.now()
+    max_img_length = 0
     for res in list:
         datas.append([res['rid'], res['score'], now, res['name'], res['img'], res['food_type_id']])
-        if len(res['img']) >= 100:
-            print('longer than 100')
+        max_img_length = max(max_img_length, len(res['img']))
+    print(f'max_image length : {max_img_length}')
+    '''
     query = "insert into restaurant(rid,score,created_at,name,title_image_url,food_type_id) " \
             "values (%s, %s, %s, %s, %s, %s);"
     curs.executemany(query, datas)
+    '''
 
 
 
@@ -60,7 +63,6 @@ if __name__ == '__main__':
             food_type_name = restaurant['food_type']
             restaurant['food_type_id'] = food_type_dict[food_type_name]['id']
         insert_db(curs, restaurant_list)
-        curs.exe
         conn.commit()
     conn.close()
 

@@ -31,15 +31,20 @@ def get_menus_by_tuple(city_name, restaurant_menu_dict):
 
 def insert_db(curs, list):
     datas = []
-    max_name_length = 0
+    max_price_value = 0
     menu_name = ""
+    rid = ""
     for res in list:
         datas.append([res['name'], res['order_number'], res['price'], res['restaurant_id']])
-        if max_name_length < len(res['name']):
-            max_name_length = len(res['name'])
+        if type(res['price']) != float:
+            continue
+        if max_price_value < res['price']:
+            max_price_value = res['price']
             menu_name = res['name']
-    print(max_name_length)
+            rid = res['rid']
+    print(max_price_value)
     print(menu_name)
+    print(rid)
     '''
     query = "insert into restaurant_menu(name,order_number,price,restaurant_id) " \
             "values (%s, %s, %s, %s);"

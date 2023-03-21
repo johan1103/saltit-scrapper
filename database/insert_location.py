@@ -1,5 +1,6 @@
 import pymysql.cursors
 import pandas as pd
+from datetime import datetime
 
 # connection 정보
 conn = pymysql.connect(
@@ -30,6 +31,16 @@ def get_restaurant_id_by_dict(curs):
     return dicts
 
 
+def insert_db(curs, list):
+    datas = []
+    now = datetime.now()
+    for res in list:
+        datas.append([res['restaurant_id'], res['latitude'], res['longitude'], res['road_address']])
+    query = "insert into restaurant_location(restaurant_id,latitude,longitude,road_address) " \
+            "values (%s, %s, %s, %s);"
+    curs.executemany(query, datas)
+
+
 if __name__ == '__main__':
     cities = ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북',
               '제주', '충남', '충북']
@@ -44,3 +55,4 @@ if __name__ == '__main__':
             rid = location['rid']
             restaurant_id = restaurant_id_dict[rid]['id']
             location['restaurant_id'] = restaurant_id
+        insert_db(curs, location_list)

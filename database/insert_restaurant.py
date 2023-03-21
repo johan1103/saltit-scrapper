@@ -22,8 +22,6 @@ def get_restaurants_by_tuple(city_name, restaurant_dict):
     for idx, raw_value in raw_dict.items():
         is_duplicated = restaurant_dict.get(raw_value['rid'], 'NO_KEY')
         if is_duplicated != 'NO_KEY':
-            print('duplicated')
-            print(f"{city_name}, name : {raw_value['name']}, address : {raw_value['address']}")
             continue
         restaurant_dict[raw_value['rid']] = {'name': raw_value['name']}
         restaurants.append({'rid': raw_value['rid'], 'score': raw_value['score'], 'name': raw_value['name'],
@@ -64,7 +62,7 @@ if __name__ == '__main__':
         for restaurant in restaurant_list:
             food_type_name = restaurant['food_type']
             restaurant['food_type_id'] = food_type_dict[food_type_name]['id']
-        #insert_db(curs, restaurant_list)
+        insert_db(curs, restaurant_list)
         conn.commit()
     conn.close()
     print("restaurant insert time :", time.time() - start)

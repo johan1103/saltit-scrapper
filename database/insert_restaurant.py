@@ -1,5 +1,6 @@
 import pymysql.cursors
 import pandas as pd
+import time
 from datetime import datetime
 
 
@@ -13,14 +14,21 @@ conn = pymysql.connect(
 )
 
 
-def get_restaurants_by_tuple(city_name, restaurants):
+def get_restaurants_by_tuple(city_name, restaurant_dict):
+    restaurants = []
     data = pd.read_csv('../static/summary/restaurant-summary-' + city_name + '.csv')
     data = data.where((pd.notnull(data)), None)
     raw_dict = data.to_dict('index')
     for idx, raw_value in raw_dict.items():
+        is_duplicated = restaurant_dict.get(raw_value['rid'], 'NO_KEY')
+        if is_duplicated != 'NO_KEY':
+            print('duplicated')
+            print(f"{city_name}, name : {raw_value['name']}, address : {raw_value['address']}")
+            continue
+        restaurant_dict[raw_value['rid']] = {'name': raw_value['name']}
         restaurants.append({'rid': raw_value['rid'], 'score': raw_value['score'], 'name': raw_value['name'],
                             'img': raw_value['img'], 'food_type': raw_value['food_type'], 'phone': raw_value['phone']})
-    return
+    return restaurants
 
 
 def get_food_type_id_by_dict(curs):
@@ -48,16 +56,16 @@ if __name__ == '__main__':
               '제주', '충남', '충북']
     curs = conn.cursor()
     food_type_dict = get_food_type_id_by_dict(curs)
-
+    start = time.time()
+    restaurants_dict = {}
     for city_name in cities:
-        if city_name != '서울':
-            continue
-        restaurant_list = []
-        get_restaurants_by_tuple(city_name, restaurant_list)
+        print(city_name)
+        restaurant_list = get_restaurants_by_tuple(city_name, restaurants_dict)
         for restaurant in restaurant_list:
             food_type_name = restaurant['food_type']
             restaurant['food_type_id'] = food_type_dict[food_type_name]['id']
-        insert_db(curs, restaurant_list)
+        #insert_db(curs, restaurant_list)
         conn.commit()
     conn.close()
+    print("restaurant insert time :", time.time() - start)
 

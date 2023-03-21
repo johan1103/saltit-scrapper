@@ -15,10 +15,11 @@ conn = pymysql.connect(
 
 def get_restaurants_by_tuple(city_name, restaurants):
     data = pd.read_csv('../static/summary/restaurant-summary-' + city_name + '.csv')
+    data = data.where((pd.notnull(data)), None)
     raw_dict = data.to_dict('index')
     for idx, raw_value in raw_dict.items():
         restaurants.append({'rid': raw_value['rid'], 'score': raw_value['score'], 'name': raw_value['name'],
-                            'img': raw_value['img'], 'food_type': raw_value['food_type']})
+                            'img': raw_value['img'], 'food_type': raw_value['food_type'], 'phone': raw_value['phone']})
     return
 
 
@@ -36,11 +37,10 @@ def insert_db(curs, list):
     datas = []
     now = datetime.now()
     for res in list:
-        datas.append([res['rid'], res['score'], now, res['name'], res['img'], res['food_type_id']])
-    query = "insert into restaurant(rid,score,created_at,name,title_image_url,food_type_id) " \
-            "values (%s, %s, %s, %s, %s, %s);"
+        datas.append([res['rid'], res['score'], now, res['name'], res['img'], res['food_type_id'], res['phone']])
+    query = "insert into restaurant(rid,score,created_at,name,title_image_url,food_type_id,phone) " \
+            "values (%s, %s, %s, %s, %s, %s, %s);"
     curs.executemany(query, datas)
-
 
 
 if __name__ == '__main__':

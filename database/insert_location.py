@@ -27,7 +27,7 @@ def get_restaurant_id_by_dict(curs):
     curs.execute(sql)
     result = curs.fetchall()
     for data in result:
-        dicts[data[3]] = {'id': data[0]}
+        dicts[data[4]] = {'id': data[0]}
     return dicts
 
 
@@ -50,9 +50,11 @@ if __name__ == '__main__':
         if city_name != '서울':
             continue
         location_list = []
-        get_locations_by_tuple(location_list)
+        get_locations_by_tuple(city_name, location_list)
         for location in location_list:
             rid = location['rid']
             restaurant_id = restaurant_id_dict[rid]['id']
             location['restaurant_id'] = restaurant_id
         insert_db(curs, location_list)
+        conn.commit()
+    conn.close()

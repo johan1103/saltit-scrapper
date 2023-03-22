@@ -65,3 +65,4 @@ if __name__ == '__main__':
         insert_db(curs, menu_list)
         conn.commit()
     conn.close()
+    print("restaurant insert time :", time.time() - start)

@@ -20,12 +20,10 @@ if __name__ == '__main__':
               '제주', '충남', '충북']
     for name in cities:
         start = time.time()
-        # 테스트 용도로 서울의 식당 데이터 20개만 추출
-        if name == '서울':
-            restaurants = get_restaurants_by_dict(city_name=name)
-            menus = scrapping_menus(restaurants)
-            save_as_excel(menus, name)
-            f = open(f"../static/summary/scrapping_time_{name}.txt", 'w')
-            f.write(f'{name} scrapping time : ')
-            f.write(str(time.time() - start))
-            f.close()
+        restaurants = get_restaurants_by_dict(city_name=name)
+        menus = scrapping_menus(restaurants)
+        save_as_excel(menus, name)
+        f = open(f"../static/summary/scrapping_time_{name}.txt", 'w')
+        f.write(f'{name} scrapping time : ')
+        f.write(str(time.time() - start))
+        f.close()

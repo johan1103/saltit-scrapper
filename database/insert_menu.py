@@ -1,7 +1,7 @@
 import pymysql.cursors
 from insert_location import get_restaurant_id_by_dict
 import pandas as pd
-import emoji
+import re
 import time
 
 # connection 정보
@@ -40,7 +40,7 @@ def insert_db(curs, list):
             continue
         if res['price'] > max_menu_price:
             continue
-        res['name'] = emoji.replace_emoji(res['name'])
+        res['name'] = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s]", "", res['name'])
         datas.append([res['name'], res['order_number'], res['price'], res['restaurant_id']])
     query = "insert into restaurant_menu(name,order_number,price,restaurant_id) " \
             "values (%s, %s, %s, %s);"
@@ -55,8 +55,7 @@ if __name__ == '__main__':
     curs = conn.cursor()
     restaurant_id_dict = get_restaurant_id_by_dict(curs)
     for city_name in cities:
-        if city_name != '서울':
-            continue
+        print(city_name)
         menu_list = get_menus_by_tuple(city_name, duplicated_dict)
         for menu in menu_list:
             rid = menu['rid']

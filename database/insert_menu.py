@@ -40,7 +40,7 @@ def insert_db(curs, list):
             continue
         if res['price'] > max_menu_price:
             continue
-        res['name'] = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s]", "", res['name'])
+        res['name'] = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z()&,+/~_一-鿕㐀-䶵豈-龎\s]", "", res['name'])
         datas.append([res['name'], res['order_number'], res['price'], res['restaurant_id']])
     query = "insert into restaurant_menu(name,order_number,price,restaurant_id) " \
             "values (%s, %s, %s, %s);"

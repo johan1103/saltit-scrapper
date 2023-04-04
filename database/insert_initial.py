@@ -1,16 +1,8 @@
-import pymysql.cursors
-import pandas as pd
-
-conn = pymysql.connect(
-    host='localhost',  # host name
-    user='root',  # user name
-    password='1234',  # password
-    db='saltit_test',  # db name
-    charset='utf8'
-)
+import properties
 
 
 if __name__ == '__main__':
+    conn = properties.get_db_properties()
     food_types = ['한식', '양식', '일식', '중식']
     curs = conn.cursor()
     for food in food_types:

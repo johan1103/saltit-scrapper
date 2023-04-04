@@ -3,15 +3,7 @@ from insert_location import get_restaurant_id_by_dict
 import pandas as pd
 import re
 import time
-
-# connection 정보
-conn = pymysql.connect(
-    host='localhost',  # host name
-    user='root',  # user name
-    password='1234',  # password
-    db='saltit_test',  # db name
-    charset='utf8'
-)
+import properties
 
 
 def get_menus_by_tuple(city_name, restaurant_menu_dict):
@@ -48,6 +40,7 @@ def insert_db(curs, list):
 
 
 if __name__ == '__main__':
+    conn = properties.get_db_properties()
     cities = ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북',
               '제주', '충남', '충북']
     start = time.time()
@@ -64,4 +57,4 @@ if __name__ == '__main__':
         insert_db(curs, menu_list)
         conn.commit()
     conn.close()
-    print("restaurant insert time :", time.time() - start)
+    print("restaurant menu insert time :", time.time() - start)

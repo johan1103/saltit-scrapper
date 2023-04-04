@@ -23,7 +23,7 @@ if __name__ == '__main__':
         restaurants = get_restaurants_by_dict(city_name=name)
         menus = scrapping_menus(restaurants)
         save_as_excel(menus, name)
-        f = open(f"../static/summary/scrapping_time_{name}.txt", 'w')
+        f = open(f"../static/menu/scrapping_time_{name}.txt", 'w')
         f.write(f'{name} scrapping time : ')
         f.write(str(time.time() - start))
         f.close()

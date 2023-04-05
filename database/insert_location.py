@@ -32,9 +32,11 @@ def get_restaurant_id_by_dict(curs):
 def insert_db(curs, list):
     datas = []
     for res in list:
-        datas.append([res['restaurant_id'], res['latitude'], res['longitude'], res['road_address']])
-    query = "insert into restaurant_location(restaurant_id,latitude,longitude,road_address) " \
-            "values (%s, %s, %s, %s);"
+        point_from_text = f"POINT({res['latitude']} {res['longitude']})"
+        print(point_from_text)
+        datas.append([res['restaurant_id'], point_from_text, res['road_address']])
+    query = "insert into restaurant_location(restaurant_id,location,road_address) " \
+            "values (%s, ST_POINTFROMTEXT(%s,4326), %s);"
     curs.executemany(query, datas)
 
 
